@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/Remi-Gauchet/Algorithmie/seance4/outils"
+	"github.com/Remi-Gauchet/Algorithmie/seance5/outils"
 )
 
 // structure
@@ -16,6 +16,16 @@ type Piles struct {
 
 // exécute les fonctions et renvoie une erreur
 func executer(args []string) error {
+	if len(os.Args) < 2 {
+		return nil
+	}
+
+	//appel de la fonction comparer
+	if args[0] == "comparer" {
+		comparer()
+		return nil
+	}
+
 	//on lit l'argument
 	nombres, err := outils.LireNombres(args)
 	if err != nil {
@@ -48,9 +58,8 @@ func executer(args []string) error {
 	}
 
 	// déclare les opérations effectuées pour le tri
-	for _, op := range p.operations {
-		fmt.Println(op)
-	}
+	fmt.Println("opérations :", p.operations)
+	fmt.Println("nombre d'opérations :", len(p.operations))
 	return nil
 }
 
