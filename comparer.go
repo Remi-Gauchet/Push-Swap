@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 
-	"github.com/Remi-Gauchet/Algorithmie/seance5/outils"
+	"github.com/Remi-Gauchet/Push-Swap/outils"
 )
 
 // copier renvoie une copie indépendante de la tranche.

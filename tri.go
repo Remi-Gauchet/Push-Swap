@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/Remi-Gauchet/Algorithmie/seance5/outils"
+	"github.com/Remi-Gauchet/Push-Swap/outils"
 )
 
 // trier appelle la fonction tri la plus adaptée à la taille de la pile
