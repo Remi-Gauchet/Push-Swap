@@ -11,7 +11,7 @@ func (p *Piles) ra() {
 	p.Operations = append(p.Operations, "ra")
 }
 
-//pile B : envoie le premier en dernier
+// pile B : envoie le premier en dernier
 func (p *Piles) rb() {
 	if len(p.B) < 2 {
 		return
@@ -22,20 +22,16 @@ func (p *Piles) rb() {
 
 // réalise ra et rb en même temps
 func (p *Piles) rr() {
-	if len(p.A) < 2 && len(p.B) > 1 {
+	switch {
+	case len(p.A) < 2:
 		p.rb()
-		return
-	}
-	if len(p.A) > 1 && len(p.B) < 2 {
+	case len(p.B) < 2:
 		p.ra()
-		return
+	default:
+		p.ra()
+		p.rb()
+		p.Operations = append(p.Operations[:len(p.Operations)-2], "rr")
 	}
-	if len(p.A) < 2 && len(p.B) < 2 {
-		return
-	}
-	p.A = append(p.A[1:], p.A[0])
-	p.B = append(p.B[1:], p.B[0])
-	p.Operations = append(p.Operations, "rr")
 }
 
 // échange les deux premiers éléments de la pile A
@@ -58,12 +54,16 @@ func (p *Piles) sb() {
 
 // réalise sa et sb en même temps
 func (p *Piles) ss() {
-	if len(p.B) < 2 || len(p.A) < 2 {
-		return
+	switch {
+	case len(p.B) < 2:
+		p.sa()
+	case len(p.A) < 2:
+		p.sb()
+	default:
+		p.sa()
+		p.sb()
+		p.Operations = append(p.Operations[:len(p.Operations)-2], "ss")
 	}
-	p.A[0], p.A[1] = p.A[1], p.A[0]
-	p.B[0], p.B[1] = p.B[1], p.B[0]
-	p.Operations = append(p.Operations, "ss")
 }
 
 // envoie le premier élément de la pile A sur la pile B
@@ -106,10 +106,14 @@ func (p *Piles) rrb() {
 
 // exécute rra et rrb en même temps
 func (p *Piles) rrr() {
-	if len(p.A) < 2 || len(p.B) < 2 {
-		return
+	switch {
+	case len(p.A) < 2:
+		p.rrb()
+	case len(p.B) < 2:
+		p.rra()
+	default:
+		p.rra()
+		p.rrb()
+		p.Operations = append(p.Operations[:len(p.Operations)-2], "rrr")
 	}
-	p.A = append([]int{p.A[len(p.A)-1]}, p.A[:len(p.A)-1]...)
-	p.B = append([]int{p.B[len(p.B)-1]}, p.B[:len(p.B)-1]...)
-	p.Operations = append(p.Operations, "rrr")
 }
