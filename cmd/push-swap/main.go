@@ -10,10 +10,6 @@ import (
 
 // exécute les fonctions et renvoie une erreur
 func executer(args []string) error {
-	if len(os.Args) < 2 {
-		return nil
-	}
-
 	//on lit l'argument
 	nombres, err := outils.LireNombres(args)
 	if err != nil {
@@ -45,9 +41,10 @@ func executer(args []string) error {
 		return fmt.Errorf("impossible de trier la pile")
 	}
 
-	// déclare les opérations effectuées pour le tri
-	fmt.Println("opérations :", p.Operations)
-	fmt.Println("nombre d'opérations :", len(p.Operations))
+	// déclare les opérations effectuées pour le tri, avec une opération par ligne
+	for _, op := range p.Operations {
+		fmt.Println(op)
+	}
 	return nil
 }
 
@@ -55,7 +52,7 @@ func executer(args []string) error {
 func main() {
 	err := executer(os.Args[1:])
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "Erreur :", err)
+		fmt.Fprintln(os.Stderr, "Error")
 		os.Exit(1)
 	}
 }
