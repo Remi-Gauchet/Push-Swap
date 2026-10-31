@@ -4,16 +4,18 @@ package piles
 // du bloc en cours. Les plus petits du bloc partent au fond de b.
 func (p *Piles) pousserParBlocs(tailleBloc int) {
 	pousses := 0
-
 	for len(p.A) > 0 {
-		// à compléter avec la règle de la partie 1
 		if p.A[0] <= pousses {
 			p.pb()
-			p.rb()
 			pousses++
+			if len(p.A) > 0 && p.A[0] > (pousses+tailleBloc) {
+				p.rr()
+			} else {
+				p.rb()
+			}
 		} else if p.A[0] <= (pousses + tailleBloc) {
-			p.pb()
 			pousses++
+			p.pb()
 		} else {
 			p.ra()
 		}
