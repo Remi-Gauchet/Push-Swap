@@ -5,24 +5,12 @@ import (
 	"os"
 
 	"github.com/Remi-Gauchet/Push-Swap/outils"
+	"github.com/Remi-Gauchet/Push-Swap/piles"
 )
-
-// structure
-type Piles struct {
-	a          []int
-	b          []int
-	operations []string
-}
 
 // exécute les fonctions et renvoie une erreur
 func executer(args []string) error {
 	if len(os.Args) < 2 {
-		return nil
-	}
-
-	//appel de la fonction comparer
-	if args[0] == "comparer" {
-		comparer()
 		return nil
 	}
 
@@ -43,23 +31,23 @@ func executer(args []string) error {
 		return err
 	}
 
-	p := Piles{a: outils.Rangs(nombres)}
+	p := piles.Piles{A: outils.Rangs(nombres)}
 	// une pile déjà triée est renvoyée immédiatement
-	if p.aEstTriee() {
+	if p.AEstTriee() {
 		return nil
 	}
 
 	// on commence le tri
-	p.trier()
+	p.Trier()
 
 	//si le programme tel quel n'arrive pas à trier
-	if p.aEstTriee() == false || len(p.b) > 0 {
+	if p.AEstTriee() == false || len(p.B) > 0 {
 		return fmt.Errorf("impossible de trier la pile")
 	}
 
 	// déclare les opérations effectuées pour le tri
-	fmt.Println("opérations :", p.operations)
-	fmt.Println("nombre d'opérations :", len(p.operations))
+	fmt.Println("opérations :", p.Operations)
+	fmt.Println("nombre d'opérations :", len(p.Operations))
 	return nil
 }
 

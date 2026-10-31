@@ -5,6 +5,7 @@ import (
 	"math/rand"
 
 	"github.com/Remi-Gauchet/Push-Swap/outils"
+	"github.com/Remi-Gauchet/Push-Swap/piles"
 )
 
 // copier renvoie une copie indépendante de la tranche.
@@ -28,15 +29,15 @@ func comparer() {
 			depart := rand.Perm(n)
 			copie1 := copier(depart)
 			// à compléter : lancer trierOptimise sur une copie,
-			simple := Piles{a: copie1}
-			simple.trierOptimise()
+			Tsimple := piles.Piles{A: copie1}
+			Tsimple.TrierOptimise()
 			// trierParBlocs sur une autre copie,
 			copie2 := copier(depart)
-			bloc := Piles{a: copie2}
-			bloc.trierParBlocs(outils.TailleDeBloc(n))
+			Tbloc := piles.Piles{A: copie2}
+			Tbloc.TrierParBlocs(outils.TailleDeBloc(n))
 			// et ajouter leurs nombres d'opérations aux totaux
-			totalSimple += len(simple.operations)
-			totalBlocs += len(bloc.operations)
+			totalSimple += len(Tsimple.Operations)
+			totalBlocs += len(Tbloc.Operations)
 
 		}
 
@@ -46,4 +47,8 @@ func comparer() {
 
 		fmt.Printf("n=%-4d  séance 2 : %-6d  blocs : %-6d  gain : %d %%\n", n, moyenneSimple, moyenneBlocs, gain)
 	}
+}
+
+func main() {
+	comparer()
 }

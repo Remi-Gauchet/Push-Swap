@@ -1,11 +1,14 @@
 # Push-Swap
-Programme d'organisation et de tri dont la finalité est d'obtenir le bon résultat en faisant le moins d'opérations possibles.
+Programme d'organisation et de tri d'une liste de nombre.  
+Défi d'algorithmie.  
 
 
-## Objectif
+## Fonctionnement et objectif
 Push-Swap trie dans l'ordre croissant une liste de *n* nombres entiers relatifs, entrés en arguments dans le terminal.  
 Pour faire cela, il répartit les valeurs sous la forme de deux piles *a*=[]int et *b*=[]int dont le sommet de la pile se situe à gauche.  
-À travers plusieurs opérations bien définies (swap, rotate et push sur l'autre pile), le programme réorganise la liste de nombres que vous avez entré, et vous rend la renvoie triée, accompagné du nombre d'opérations réalisées.
+À travers plusieurs opérations bien définies (swap, rotate et push), le programme réorganise la liste de nombres, et vous rend la renvoie triée, accompagné du nombre d'opérations réalisées.  
+
+La finalité de cet exercice est d'obtenir le bon résultat en faisant le moins d'opérations possibles.
 
 
 ## Exemple d'utilisation

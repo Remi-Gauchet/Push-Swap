@@ -1,1 +1,5 @@
 *.xlsx
+/push-swap
+/push-swap.exe
+/checker
+/checker.exe
