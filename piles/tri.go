@@ -77,7 +77,7 @@ func (p *Piles) trierTrois() {
 // trierCinq trie une pile de 5
 func (p *Piles) trierCinq() {
 	for len(p.A) > 3 {
-		p.amenerAuSommet(p.positionDuMinimum())
+		p.amenerAuSommetA(p.positionDuMinimum())
 		p.pb()
 	}
 	p.trierTrois()
@@ -89,7 +89,7 @@ func (p *Piles) trierCinq() {
 // trierOptimise trie par sélection
 func (p *Piles) TrierOptimise() {
 	for len(p.A) != 0 {
-		p.amenerAuSommet(p.positionDuMinimum())
+		p.amenerAuSommetA(p.positionDuMinimum())
 		p.pb()
 	}
 	for len(p.B) != 0 {
@@ -97,9 +97,9 @@ func (p *Piles) TrierOptimise() {
 	}
 }
 
-// amenerAuSommet fait remonter l'élément de la pile "a" à l'index "position",
+// amenerAuSommetA fait remonter l'élément de la pile "A" à l'index "position",
 // par le chemin le plus court
-func (p *Piles) amenerAuSommet(position int) {
+func (p *Piles) amenerAuSommetA(position int) {
 	if position <= len(p.A)/2 {
 		for i := 0; i < position; i++ {
 			p.ra()
@@ -111,11 +111,11 @@ func (p *Piles) amenerAuSommet(position int) {
 	}
 }
 
-// amenerAuSommetB fait remonter l'élément de la pile "b" à l'index "position",
+// amenerAuSommetB fait remonter l'élément de la pile "B" à l'index "position",
 // par le chemin le plus court
 func (p *Piles) amenerAuSommetB(position int) {
-	if position < len(p.B)/2 {
-		for i := 0; i <= position; i++ {
+	if position <= len(p.B)/2 {
+		for i := 0; i < position; i++ {
 			p.rb()
 		}
 	} else {
