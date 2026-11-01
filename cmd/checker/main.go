@@ -9,6 +9,8 @@ import (
 	"github.com/Remi-Gauchet/Push-Swap/piles"
 )
 
+// executer lit les opérations qu'on lui donne et réorganise la structure Piles en fonction
+// à la fin, il renvoie OK si Piles est bien triée, et KO elle ne l'est pas
 func executer(args []string) error {
 	// on lit l'argument
 	nombres, err := outils.LireNombres(args)
@@ -27,19 +29,26 @@ func executer(args []string) error {
 		return err
 	}
 
+	// on définit la pile
 	p := piles.Piles{A: nombres}
+
+	// on scanne les lignes d'opérations
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() == true {
 		ligne := scanner.Text()
+		// on appelle la fonction Application, qui modifie les Piles selon les operations lues
 		err = p.Application(ligne)
 		if err != nil {
 			return err
 		}
 	}
+	// on renvoie une erreur s'il y a un problème de lecture
 	err = scanner.Err()
 	if err != nil {
 		return err
 	}
+
+	// on écrit le retour de Checker selon si la structure Piles est triée ou non
 	if p.AEstTriee() == false || len(p.B) > 0 {
 		fmt.Println("KO")
 	} else {
@@ -48,6 +57,7 @@ func executer(args []string) error {
 	return nil
 }
 
+// main du checker appelle la fonction executer, et renvoie une erreur si besoin
 func main() {
 	err := executer(os.Args[1:])
 	if err != nil {
