@@ -10,18 +10,18 @@ import (
 
 // exécute les fonctions et renvoie une erreur
 func executer(args []string) error {
-	//on lit l'argument
+	// on lit l'argument
 	nombres, err := outils.LireNombres(args)
 	if err != nil {
 		return err
 	}
 
-	//on vérifie qu'il y ait bien un argument
+	// on vérifie qu'il y ait bien un argument
 	if len(nombres) == 0 {
 		return nil
 	}
 
-	//on n'accepte pas les doublons
+	// on n'accepte pas les doublons
 	err = outils.VerifierDoublons(nombres)
 	if err != nil {
 		return err
@@ -36,7 +36,7 @@ func executer(args []string) error {
 	// on commence le tri
 	p.Trier()
 
-	//si le programme tel quel n'arrive pas à trier
+	// si le programme tel quel n'arrive pas à trier
 	if p.AEstTriee() == false || len(p.B) > 0 {
 		return fmt.Errorf("impossible de trier la pile")
 	}
