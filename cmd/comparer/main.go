@@ -8,13 +8,6 @@ import (
 	"github.com/Remi-Gauchet/Push-Swap/piles"
 )
 
-// copier renvoie une copie indépendante de la tranche.
-func copier(nombres []int) []int {
-	copie := make([]int, len(nombres))
-	copy(copie, nombres)
-	return copie
-}
-
 // comparer lance nos 3 stratégies de tri sur les mêmes piles tirées au hasard
 // TrierOptimise, TrierParBlocs et TrierRadix (détails dans le README)
 // puis affiche la moyenne des mouvements pour chaque taille, afin de comparer leur efficacité en fonction de n
@@ -31,17 +24,17 @@ func comparer() {
 			depart := rand.Perm(n)
 
 			// Tri par sélection
-			copie1 := copier(depart)
+			copie1 := outils.Copier(depart)
 			Tsimple := piles.Piles{A: copie1}
 			Tsimple.TrierOptimise()
 
 			// tri par blocs
-			copie2 := copier(depart)
+			copie2 := outils.Copier(depart)
 			Tbloc := piles.Piles{A: copie2}
 			Tbloc.TrierParBlocs(outils.TailleDeBloc(n))
 
 			// tri radix
-			copie3 := copier(depart)
+			copie3 := outils.Copier(depart)
 			Tradix := piles.Piles{A: copie3}
 			Tradix.TrierRadix()
 
