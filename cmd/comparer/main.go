@@ -15,37 +15,64 @@ func copier(nombres []int) []int {
 	return copie
 }
 
-// comparer lance les deux stratégies sur les mêmes piles au hasard
-// et affiche la moyenne des mouvements pour chaque taille.
+// comparer lance nos 3 stratégies de tri sur les mêmes piles tirées au hasard
+// TrierOptimise, TrierParBlocs et TrierRadix (détails dans le README)
+// puis affiche la moyenne des mouvements pour chaque taille, afin de comparer leur efficacité en fonction de n
 func comparer() {
-	tailles := []int{10, 20, 50, 100, 500}
+	tailles := []int{10, 20, 50, 100, 500, 1000}
 	essais := 20
 
 	for _, n := range tailles {
 		totalSimple := 0
 		totalBlocs := 0
+		totalRadix := 0
 
 		for e := 0; e < essais; e++ {
 			depart := rand.Perm(n)
+
+			// Tri par sélection
 			copie1 := copier(depart)
-			// à compléter : lancer trierOptimise sur une copie,
 			Tsimple := piles.Piles{A: copie1}
 			Tsimple.TrierOptimise()
-			// trierParBlocs sur une autre copie,
+
+			// tri par blocs
 			copie2 := copier(depart)
 			Tbloc := piles.Piles{A: copie2}
 			Tbloc.TrierParBlocs(outils.TailleDeBloc(n))
-			// et ajouter leurs nombres d'opérations aux totaux
+
+			// tri radix
+			copie3 := copier(depart)
+			Tradix := piles.Piles{A: copie3}
+			Tradix.TrierRadix()
+
+			//addition
 			totalSimple += len(Tsimple.Operations)
 			totalBlocs += len(Tbloc.Operations)
-
+			totalRadix += len(Tradix.Operations)
 		}
 
+		// calcul des moyennes
 		moyenneSimple := totalSimple / essais
 		moyenneBlocs := totalBlocs / essais
-		gain := 100 * (moyenneSimple - moyenneBlocs) / moyenneSimple
+		moyenneRadix := totalRadix / essais
 
-		fmt.Printf("n=%-4d  séance 2 : %-6d  blocs : %-6d  gain : %d %%\n", n, moyenneSimple, moyenneBlocs, gain)
+		gainBlocs := 0
+		gainRadix := 0
+
+		if moyenneSimple > 0 {
+			gainBlocs = (moyenneSimple - moyenneBlocs) * 100 / moyenneSimple
+			gainRadix = (moyenneSimple - moyenneRadix) * 100 / moyenneSimple
+		}
+
+		fmt.Printf(
+			"n=%-4d  sélection : %-6d  blocs : %-6d (gain blocs : %d%%)  radix : %-6d (gain radix : %d%%)\n",
+			n,
+			moyenneSimple,
+			moyenneBlocs,
+			gainBlocs,
+			moyenneRadix,
+			gainRadix,
+		)
 	}
 }
 
