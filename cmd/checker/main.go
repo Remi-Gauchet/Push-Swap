@@ -57,7 +57,7 @@ func executer(args []string) error {
 	return nil
 }
 
-// main du checker appelle la fonction executer, et renvoie une erreur si besoin
+// main du checker appelle la fonction executer, et renvoie erreur si besoin
 func main() {
 	err := executer(os.Args[1:])
 	if err != nil {
