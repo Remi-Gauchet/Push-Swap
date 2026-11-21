@@ -1,8 +1,9 @@
 package outils
 
-// copier renvoie une copie indépendante de la tranche.
-func Copier(nombres []int) []int {
-	copie := make([]int, len(nombres))
+// Copier renvoie une copie indépendante de la slice
+// prend en compte les []int et les []string
+func Copier[T any](nombres []T) []T {
+	copie := make([]T, len(nombres))
 	copy(copie, nombres)
 	return copie
 }
