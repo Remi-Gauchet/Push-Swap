@@ -13,8 +13,11 @@ func (p *Piles) Trier() {
 		p.sa()
 	} else if len(p.A) == 3 {
 		p.trierTrois()
-	} else if len(p.A) <= 5 {
-		p.trierCinq()
+	} else if len(p.A) <= 6 {
+		instructions := p.Recherche()
+		for _, instruction := range instructions {
+			p.Application(instruction)
+		}
 	} else if len(p.A) < 20 {
 		p.TrierOptimise()
 	} else {

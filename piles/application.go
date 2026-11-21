@@ -4,7 +4,6 @@ import (
 	"fmt"
 )
 
-// Application est appelée par checker
 // lit un string et l'applique à la structure Piles si c'est une opération, sinon elle renvoie une erreur
 func (p *Piles) Application(operation string) error {
 	switch operation {
