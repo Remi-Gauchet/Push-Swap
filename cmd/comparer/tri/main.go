@@ -8,10 +8,10 @@ import (
 	"github.com/Remi-Gauchet/Push-Swap/piles"
 )
 
-// comparer lance nos 3 stratégies de tri sur les mêmes piles tirées au hasard
+// comparerTri lance nos 3 stratégies de tri sur les mêmes piles tirées au hasard
 // TrierOptimise, TrierParBlocs et TrierRadix (détails dans le README)
 // puis affiche la moyenne des mouvements pour chaque taille, afin de comparer leur efficacité en fonction de n
-func comparer() {
+func comparerTri() {
 	tailles := []int{10, 20, 50, 100, 500, 1000}
 	essais := 20
 
@@ -70,5 +70,5 @@ func comparer() {
 }
 
 func main() {
-	comparerTailles()
+	comparerTri()
 }

@@ -9,7 +9,7 @@ import (
 
 // comparerTailles teste plusieurs tailles de bloc pour chaque taille de pile
 func comparerTailles() {
-	tailles := []int{20, 50, 100}
+	tailles := []int{12, 20, 50, 100, 200, 500}
 	blocs := []int{5, 8, 10, 15, 20}
 	essais := 20
 
@@ -26,4 +26,8 @@ func comparerTailles() {
 		}
 		fmt.Println()
 	}
+}
+
+func main() {
+	comparerTailles()
 }

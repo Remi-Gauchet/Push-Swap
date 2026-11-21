@@ -36,6 +36,10 @@ func executer(args []string) error {
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() == true {
 		ligne := scanner.Text()
+		if ligne == "" { // on accepte une ligne vide
+			continue
+		}
+
 		// on appelle la fonction Application, qui modifie les Piles selon les operations lues
 		err = p.Application(ligne)
 		if err != nil {

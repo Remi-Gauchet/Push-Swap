@@ -13,12 +13,12 @@ func (p *Piles) Trier() {
 		p.sa()
 	} else if len(p.A) == 3 {
 		p.trierTrois()
-	} else if len(p.A) <= 8 {
+	} else if len(p.A) <= 8 { // on s'arrête à 8 sinon ça dure trop longtemps
 		instructions := p.Recherche()
 		for _, instruction := range instructions {
 			p.Application(instruction)
 		}
-	} else if len(p.A) < 20 {
+	} else if len(p.A) < 12 {
 		p.TrierOptimise()
 	} else {
 		p.TrierParBlocs(outils.TailleDeBloc(len(p.A)))
