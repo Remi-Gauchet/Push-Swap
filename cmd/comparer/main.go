@@ -70,5 +70,5 @@ func comparer() {
 }
 
 func main() {
-	comparer()
+	comparerTailles()
 }
