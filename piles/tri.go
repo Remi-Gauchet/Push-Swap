@@ -12,7 +12,7 @@ func (p *Piles) Trier() {
 	if len(p.A) == 2 {
 		p.sa()
 	} else if len(p.A) == 3 {
-		p.trierTrois()
+		p.TrierTrois()
 	} else if len(p.A) <= 8 { // on s'arrête à 8 sinon ça dure trop longtemps
 		instructions := p.Recherche()
 		for _, instruction := range instructions {
@@ -36,7 +36,7 @@ func (p *Piles) AEstTriee() bool {
 }
 
 // Méthode pour trier une pile de trois int
-func (p *Piles) trierTrois() {
+func (p *Piles) TrierTrois() {
 	if p.AEstTriee() == true {
 		return
 	} else {
@@ -78,12 +78,12 @@ func (p *Piles) trierTrois() {
 }
 
 // trierCinq trie une pile de 5
-func (p *Piles) trierCinq() {
+func (p *Piles) TrierCinq() {
 	for len(p.A) > 3 {
 		p.amenerAuSommetA(p.positionDuMinimum())
 		p.pb()
 	}
-	p.trierTrois()
+	p.TrierTrois()
 	for len(p.B) > 0 {
 		p.pa()
 	}
