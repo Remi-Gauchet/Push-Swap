@@ -1,12 +1,33 @@
 # Push-Swap
 
-Programme en Go qui trie une liste d'entiers avec le moins d'instructions possible, en n'utilisant que deux piles (*a* et *b*) et un jeu d'opérations limité. Aucune dépendance hors bibliothèque standard.
+Programme qui trie dans l'ordre croissant une liste de *n* nombres entiers relatifs, avec le moins d'opérations possibles.  
+Pour faire cela, il répartit les valeurs sous la forme de deux piles, et utilise une liste d'opérations définies.  
+Push-Swap est un défi d'algorithmie, celui-ci est programmé en Go.
 
-Deux programmes : `push-swap` affiche les instructions qui trient la pile, `checker` vérifie qu'une suite d'instructions la trie.
+## Sommaire
+
+- [Principe](#principe)
+- [Prérequis et compilation](#prérequis-et-compilation)
+- [Utilisation](#utilisation)
+- [Les instructions](#les-instructions)
+- [Stratégie de tri](#stratégie-de-tri)
+- [Mesurer l'optimisation](#mesurer-loptimisation)
+- [Tests](#tests)
+- [Structure du projet](#structure-du-projet)
+- [Limites connues](#limites-connues)
+
+## Principe
+
+Les nombres donnés en arguments sont placés dans une pile *a*. Une seconde pile *b*, vide au départ, sert d'espace de travail. Le sommet de chaque pile est son premier élément (à gauche).
+
+Avec les opérations autorisées (échange, rotation et transfert d'un élément d'une pile à l'autre), le programme réorganise *a* jusqu'à ce que ses nombres soient triés dans l'ordre croissant, avec *b* vide. Il affiche alors la liste des instructions utilisées, une par ligne. L'objectif est d'obtenir un tri correct avec le moins d'instructions possible.
+
+Le projet contient deux programmes :
+
+- `push-swap` calcule et affiche les instructions qui trient la pile ;
+- `checker` lit des instructions sur son entrée standard, les applique à la pile et indique si elle est triée.
 
 ## Compilation
-
-Go, dans la version indiquée par `go.mod`.
 
 ```bash
 go build -o push-swap ./cmd/push-swap
@@ -15,74 +36,111 @@ go build -o checker ./cmd/checker
 
 ## Utilisation
 
+### 1) push-swap
+Entrez en argument la pile à trier (fonctionne avec ou sans guillemets).  
+Exemple :
+
 ```bash
-./push-swap "4 67 3 87 23"          # affiche 6 instructions, une par ligne
-ARG="4 67 3 87 23"
-./push-swap "$ARG" | ./checker "$ARG"   # affiche OK (ou KO)
-./push-swap "$ARG" | wc -l              # nombre d'instructions
+./push-swap "4 67 3 87 23"
 ```
 
-- Seuls les entiers relatifs sont acceptés, sans doublon.
-- En cas d'erreur (argument invalide, doublon, instruction inconnue pour `checker`) : `Error` sur la sortie d'erreur, code de sortie 1.
-- Sans argument, ou pile déjà triée : aucune sortie. Les lignes vides sont ignorées par `checker`.
+Résultat (6 instructions) :
 
-## Instructions
+```text
+pb
+sa
+pb
+rrr
+pa
+pa
+```
 
-Le sommet d'une pile est son premier élément.
+### 2) checker
 
-| Instruction | Effet |
-|---|---|
-| `sa` / `sb` / `ss` | échange les deux premiers éléments de *a* / de *b* / des deux |
-| `pa` / `pb` | déplace le premier élément de *b* vers *a* / de *a* vers *b* |
-| `ra` / `rb` / `rr` | le premier élément devient le dernier, sur *a* / *b* / les deux |
-| `rra` / `rrb` / `rrr` | le dernier élément devient le premier, sur *a* / *b* / les deux |
+Le `checker` reçoit la pile en argument et les instructions sur l'entrée standard, avec une instruction par ligne.  
+Exemple :
 
-Une instruction impossible (par exemple `pa` avec *b* vide) est sans effet.
+```bash
+echo -e "sa\nrra\npb" | ./checker "3 2 1 0"
+```
+
+Il affiche `OK` si la pile *a* est triée et que *b* est vide, `KO` sinon.  
+
+
+## Les instructions
+
+| Instruction | Effet | Exemple avant | Exemple après |
+|---|---|---|---|
+| `sa` | Échange les deux premiers éléments de *a* | a=[1 2 3 4 5] | a=[2 1 3 4 5] |
+| `sb` | Échange les deux premiers éléments de *b* | b=[1 2 3 4 5] | b=[2 1 3 4 5] |
+| `ss` | `sa` et `sb` en même temps | a=[1 2 3] b=[4 5 6] | a=[2 1 3] b=[5 4 6] |
+| `pa` | Prend le premier de *b* et le pose sur *a* | a=[1 2 3] b=[4 5] | a=[4 1 2 3] b=[5] |
+| `pb` | Prend le premier de *a* et le pose sur *b* | a=[1 2 3] b=[4 5] | a=[2 3] b=[1 4 5] |
+| `ra` | Décale *a* vers le haut : le premier devient le dernier | a=[1 2 3] | a=[2 3 1] |
+| `rb` | Décale *b* vers le haut : le premier devient le dernier | b=[1 2 3] | b=[2 3 1] |
+| `rr` | `ra` et `rb` en même temps | a=[1 2 3] b=[4 5 6] | a=[2 3 1] b=[5 6 4] |
+| `rra` | Décale *a* vers le bas : le dernier devient le premier | a=[1 2 3] | a=[3 1 2] |
+| `rrb` | Décale *b* vers le bas : le dernier devient le premier | b=[1 2 3] | b=[3 1 2] |
+| `rrr` | `rra` et `rrb` en même temps | a=[1 2 3] b=[4 5 6] | a=[3 1 2] b=[6 4 5] |
+
 
 ## Stratégie de tri
 
-Chaque nombre est d'abord remplacé par son rang (0 à *n*-1). La méthode dépend ensuite de la taille *n* :
+Avant de trier, chaque nombre est remplacé par son rang (de 0 pour le plus petit jusqu'à *n*-1 pour le plus grand)  
+Puis, la méthode utilisée dépend du nombre *n* d'éléments :
 
-| Taille | Méthode |
+| Taille n | Méthode |
 |---|---|
 | 2 | `sa` |
-| 3 | analyse des 6 cas (optimal : 2 instructions au maximum) |
-| 4 à 8 | recherche exhaustive : suite d'instructions la plus courte possible |
+| 3 | analyse des 6 cas possibles |
+| 4 à 8 | fonction recherche |
 | 9 à 11 | tri par sélection |
-| 12 et plus | tri par blocs, taille de bloc ≈ 1,4 × √*n* |
+| 12 et plus | tri par blocs |
 
-- **Recherche exhaustive** : parcours en largeur des situations atteignables, en mémorisant celles déjà vues. Le coût croît comme (*n*+1)!, d'où le seuil à 8 éléments (pire cas ≈ 5 s).
-- **Tri par sélection** : le plus petit élément de *a* passe dans *b*, puis tout revient dans *a* avec `pa`.
-- **Tri par blocs** : aller dans *b* par tranches de valeurs, puis retour dans *a* en reprenant à chaque fois le plus grand de *b*. Le coefficient 1,4 a été trouvé par mesure.
+### Fonction Recherche
 
-## Mesures
+Le programme explore les situations atteignables en 1 instruction, puis en 2, puis en 3, et ainsi de suite, en mémorisant celles déjà rencontrées pour ne pas les refaire.  
+La première situation triée trouvée est la suite d'instructions la plus courte possible.
+
+Nous avons fixé le seuil à 8 éléments maximum pour limiter le temps d'exécution.  
+Passer à 9 éléments multiplierait ce temps d'exécution par 10 environ.
+
+### Tri par sélection
+
+À chaque étape, le plus petit élément de *a* est ramené au sommet par le chemin le plus court (`ra` ou `rra`) puis envoyé dans *b*.  
+Une fois *a* vide, tous les éléments sont remis dans *a* avec `pa`, dans le bon ordre.
+
+### Tri par blocs
+
+1. **Aller** : les éléments de *a* sont envoyés dans *b* par tranches de valeurs, des plus petites aux plus grandes.
+2. **Retour** : on remonte vers *a* en ramenant à chaque fois le plus grand élément de *b*, par le chemin le plus court (`rb` ou `rrb`).
+
+La taille des tranches est calculée par `outils.TailleDeBloc` : environ 1,4 × √*n*, arrondie à l'entier le plus proche.  
+Une taille trop petite oblige à parcourir *a* un grand nombre de fois, une taille trop grande range mal *b* et rend le retour coûteux.  
+Le meilleur compromis évolue comme √*n*, et le coefficient 1,4 a été trouvé par mesure avec `cmd/comparer/tailles`.
+
+## Mesurer l'optimisation
+
+Deux outils permettent de reproduire les mesures. Ils utilisent des piles tirées au hasard.
 
 ```bash
-go run ./cmd/comparer/tri       # compare les méthodes selon la taille de la pile
-go run ./cmd/comparer/tailles   # compare plusieurs tailles de bloc
+go run ./cmd/comparer/tri       # compare les méthodes de tri selon la taille de la pile
+go run ./cmd/comparer/tailles   # compare plusieurs tailles de bloc selon la taille de la pile
 ```
 
-Nombre moyen d'instructions (20 tirages) :
+Pendant l'optimisation du programme, deux méthodes de tri ont été éliminées : TrierRadix et TrierCinq.  
+Elles sont fonctionnelles, mais moins efficaces. Nous les gardons comme point de comparaison.
 
-| n | Sélection | Blocs | Radix |
-|---|---|---|---|
-| 20 | 90 | 75 | 160 |
-| 100 | 1 476 | 557 | 1 084 |
-| 500 | 32 560 | 4 886 | 6 784 |
-
-Le tri radix (`piles.TrierRadix`) n'est pas utilisé par `push-swap` : il sert de point de comparaison.
-
-## Tests et structure
+## Tests
 
 ```bash
-go test ./...    # le test de la recherche sur 8 éléments dure environ 5 s
+go test ./...
 ```
 
-```text
-cmd/push-swap      programme principal
-cmd/checker        vérificateur d'instructions
-cmd/comparer/tri       comparaison des méthodes de tri
-cmd/comparer/tailles   comparaison des tailles de bloc
-piles/             structure Piles, instructions, algorithmes de tri
-outils/            lecture des arguments, doublons, rangs, taille de bloc
-```
+Le test de la recherche exhaustive sur 8 éléments dure environ 5 secondes. Pour l'afficher en détail : `go test -v ./piles`.
+
+## Limites connues
+
+- Push-Swap n'accepte que les nombres entiers relatifs. Les doublons sont refusés.
+- La recherche exhaustive devient trop lente au-delà de 8 éléments : c'est la raison du changement de méthode.
+- Pour les grandes piles, le tri par blocs est efficace mais n'est pas garanti optimal.

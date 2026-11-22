@@ -70,5 +70,7 @@ func comparerTri() {
 }
 
 func main() {
+	comparerRecherche("TrierTrois", 3, (*piles.Piles).TrierTrois)
+	comparerRecherche("TrierCinq", 5, (*piles.Piles).TrierCinq)
 	comparerTri()
 }
