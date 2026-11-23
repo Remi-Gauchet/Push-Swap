@@ -142,5 +142,9 @@ Le test de la recherche exhaustive sur 8 éléments dure environ 5 secondes. Pou
 ## Limites connues
 
 - Push-Swap n'accepte que les nombres entiers relatifs. Les doublons sont refusés.
+- Les nombres sont des `int` Go, donc limités aux bornes de ce type :
+de -2 147 483 648 à 2 147 483 647 sur une machine 32 bits  
+de -9 223 372 036 854 775 808 à 9 223 372 036 854 775 807 sur une machine 64 bits  
+Au-delà, le programme affiche `Error`.  
 - La recherche exhaustive devient trop lente au-delà de 8 éléments : c'est la raison du changement de méthode.
 - Pour les grandes piles, le tri par blocs est efficace mais n'est pas garanti optimal.
