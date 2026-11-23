@@ -114,7 +114,7 @@ func (p *Piles) amenerAuSommetA(position int) {
 	}
 }
 
-// amenerAuSommetB fait remonter l'élément de la pile "B" à l'index "position",
+// amenerAuSommetB fait remonter l'élément de la pile "B" à l'index "position"
 // par le chemin le plus court
 func (p *Piles) amenerAuSommetB(position int) {
 	if position <= len(p.B)/2 {

@@ -4,7 +4,8 @@ import (
 	"fmt"
 )
 
-// lit un string et l'applique à la structure Piles si c'est une opération, sinon elle renvoie une erreur
+// lit un string et l'applique à la structure Piles
+// renvoie une erreur si ce n'est pas une opération
 func (p *Piles) Application(operation string) error {
 	switch operation {
 	case "ra":

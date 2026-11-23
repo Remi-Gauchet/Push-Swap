@@ -18,7 +18,7 @@ func (p *Piles) cle() string {
 	return fmt.Sprint(p.A, p.B)
 }
 
-// Recherche renvoie la plus courte suite d'instructions qui trie la pile.
+// Recherche renvoie la suite d'instructions la plus courte pour trier
 func (p *Piles) Recherche() []string {
 	instructions := []string{"sa", "sb", "ss", "pa", "pb", "ra", "rb", "rr", "rra", "rrb", "rrr"}
 
@@ -39,7 +39,6 @@ func (p *Piles) Recherche() []string {
 			suivant := courant.copie()
 			suivant.Application(instruction)
 
-			// TROU 2 : si cette situation n'est pas dans le carnet,
 			// on l'y note et on l'ajoute à la file
 			cle := suivant.cle() // l'étiquette de cette situation
 			if !vus[cle] {       // si elle n'est PAS dans le carnet
