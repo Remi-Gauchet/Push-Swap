@@ -22,11 +22,11 @@ Soient *a* et *b* deux piles dont le sommet est à gauche.
 Les nombres relatifs donnés en arguments sont placés dans la pile *a*.  
 La pile *b*, vide au départ, sert d'espace de travail.  
 
-Avec les opérations autorisées (swap, rotate et push), le programme réorganise *a* jusqu'à ce que ses nombres soient triés dans l'ordre croissant, avec *b* vide. Il affiche alors la liste des instructions utilisées, une par ligne.  
-L'objectif est d'obtenir un tri correct avec le moins d'instructions possible.
+Avec les opérations autorisées (détaillées dans la section suivante), le programme réorganise *a* jusqu'à ce que ses nombres soient triés dans l'ordre croissant, avec *b* vide. Il affiche alors la liste des opérations utilisées, une par ligne.  
+L'objectif est d'obtenir un tri correct avec le moins d'opérations possible.
 
-- Le programme `push-swap` calcule et affiche les instructions qui trient la pile.
-- Le programme `checker` lit des instructions sur son entrée standard, les applique à la pile et indique si elle est triée.
+* Le programme `push-swap` calcule et affiche dans le terminal une suite d'opérations.
+* Le programme `checker` lit des opérations sur son entrée standard, les applique à la pile et indique si elle est triée.
 
 ## Compilation
 
@@ -58,10 +58,8 @@ pa
 pa
 ```
 
-### 2) checker
-
-Le `checker` reçoit la pile en argument et les instructions sur l'entrée standard, avec une instruction par ligne.  
-Exemple :
+### 2) Checker
+Entrez une suite d'opération puis votre suite de nombres à trier, en suivant le format de cet exemple :
 
 ```bash
 echo -e "sa\nrra\npb" | ./checker "3 2 1 0"
@@ -70,9 +68,9 @@ echo -e "sa\nrra\npb" | ./checker "3 2 1 0"
 Il affiche `OK` si la pile *a* est triée et que *b* est vide, `KO` sinon.  
 
 
-## Les instructions
+## Détail des opérations
 
-| Instruction | Effet | Exemple avant | Exemple après |
+| Opération | Effet | Exemple avant | Exemple après |
 |---|---|---|---|
 | `sa` | Échange les deux premiers éléments de *a* | a=[1 2 3 4 5] | a=[2 1 3 4 5] |
 | `sb` | Échange les deux premiers éléments de *b* | b=[1 2 3 4 5] | b=[2 1 3 4 5] |
