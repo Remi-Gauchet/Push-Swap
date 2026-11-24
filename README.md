@@ -1,7 +1,7 @@
 # Push-Swap
 
 Programme qui trie dans l'ordre croissant une liste de *n* nombres entiers relatifs, avec le moins d'opérations possibles.  
-Répartit les valeurs sous forme de deux piles, et utilise une liste d'opérations bien définies.  
+Répartit les valeurs sous forme de deux piles qu'il réorganise avec des opérations bien définies.  
 Push-Swap est un défi d'algorithmie, celui-ci est codé en Go.
 
 ## Sommaire
@@ -18,26 +18,28 @@ Push-Swap est un défi d'algorithmie, celui-ci est codé en Go.
 
 ## Principe
 
-Les nombres donnés en arguments sont placés dans une pile *a*. Une seconde pile *b*, vide au départ, sert d'espace de travail.  
-Le sommet de chaque pile est son premier élément (à gauche).
+Soient *a* et *b* deux piles dont le sommet est à gauche.  
+Les nombres relatifs donnés en arguments sont placés dans la pile *a*.  
+La pile *b*, vide au départ, sert d'espace de travail.  
 
-Avec les opérations autorisées (swap, rotate et push), le programme réorganise *a* jusqu'à ce que ses nombres soient triés dans l'ordre croissant, avec *b* vide. Il affiche alors la liste des instructions utilisées, une par ligne. L'objectif est d'obtenir un tri correct avec le moins d'instructions possible.
+Avec les opérations autorisées (swap, rotate et push), le programme réorganise *a* jusqu'à ce que ses nombres soient triés dans l'ordre croissant, avec *b* vide. Il affiche alors la liste des instructions utilisées, une par ligne.  
+L'objectif est d'obtenir un tri correct avec le moins d'instructions possible.
 
-Le projet contient deux programmes :
-
-- `push-swap` calcule et affiche les instructions qui trient la pile ;
-- `checker` lit des instructions sur son entrée standard, les applique à la pile et indique si elle est triée.
+- Le programme `push-swap` calcule et affiche les instructions qui trient la pile.
+- Le programme `checker` lit des instructions sur son entrée standard, les applique à la pile et indique si elle est triée.
 
 ## Compilation
 
 ```bash
 go build -o push-swap ./cmd/push-swap
 go build -o checker ./cmd/checker
+go build -o comparer-tailles ./cmd/comparer/tailles
+go build -o comparer-tri ./cmd/comparer/tri
 ```
 
 ## Utilisation
 
-### 1) push-swap
+### 1) Push-Swap
 Entrez en argument la pile à trier (fonctionne avec ou sans guillemets).  
 Exemple :
 
@@ -122,11 +124,10 @@ Le meilleur compromis évolue comme √*n*, et le coefficient 1,4 a été trouv�
 
 ## Mesurer l'optimisation
 
-Voici deux outils qui utilisent des piles tirées au hasard :
-
+Voici deux outils qui utilisent des piles tirées au hasard :  
 ```bash
-go run ./cmd/comparer/tri       # compare les méthodes de tri selon la taille de la pile
-go run ./cmd/comparer/tailles   # compare plusieurs tailles de bloc selon la taille de la pile
+./comparer-tri      # compare les méthodes de tri selon la taille de la pile
+./comparer-tailles   # compare plusieurs tailles de bloc selon la taille de la pile
 ```
 
 Pendant l'optimisation du programme, deux méthodes de tri ont été éliminées : TrierRadix et TrierCinq.  
@@ -135,11 +136,9 @@ Elles sont fonctionnelles, mais moins efficaces. Nous les gardons comme point de
 ## Tests
 
 ```bash
-go test ./...
+go test -v ./piles
 ```
 
-Le test de la fonction recherche sur 8 éléments dure environ 5 secondes.  
-Pour l'afficher en détail : `go test -v ./piles`.
 
 ## Limites connues
 
