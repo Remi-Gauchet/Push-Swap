@@ -1,8 +1,8 @@
 # Push-Swap
 
 Programme qui trie dans l'ordre croissant une liste de *n* nombres entiers relatifs, avec le moins d'opérations possibles.  
-Pour faire cela, il répartit les valeurs sous la forme de deux piles, et utilise une liste d'opérations définies.  
-Push-Swap est un défi d'algorithmie, celui-ci est programmé en Go.
+Répartit les valeurs sous forme de deux piles, et utilise une liste d'opérations bien définies.  
+Push-Swap est un défi d'algorithmie, celui-ci est codé en Go.
 
 ## Sommaire
 
@@ -18,9 +18,10 @@ Push-Swap est un défi d'algorithmie, celui-ci est programmé en Go.
 
 ## Principe
 
-Les nombres donnés en arguments sont placés dans une pile *a*. Une seconde pile *b*, vide au départ, sert d'espace de travail. Le sommet de chaque pile est son premier élément (à gauche).
+Les nombres donnés en arguments sont placés dans une pile *a*. Une seconde pile *b*, vide au départ, sert d'espace de travail.  
+Le sommet de chaque pile est son premier élément (à gauche).
 
-Avec les opérations autorisées (échange, rotation et transfert d'un élément d'une pile à l'autre), le programme réorganise *a* jusqu'à ce que ses nombres soient triés dans l'ordre croissant, avec *b* vide. Il affiche alors la liste des instructions utilisées, une par ligne. L'objectif est d'obtenir un tri correct avec le moins d'instructions possible.
+Avec les opérations autorisées (swap, rotate et push), le programme réorganise *a* jusqu'à ce que ses nombres soient triés dans l'ordre croissant, avec *b* vide. Il affiche alors la liste des instructions utilisées, une par ligne. L'objectif est d'obtenir un tri correct avec le moins d'instructions possible.
 
 Le projet contient deux programmes :
 
@@ -86,7 +87,7 @@ Il affiche `OK` si la pile *a* est triée et que *b* est vide, `KO` sinon.
 
 ## Stratégie de tri
 
-Avant de trier, chaque nombre est remplacé par son rang (de 0 pour le plus petit jusqu'à *n*-1 pour le plus grand)  
+Avant de trier, chaque nombre est remplacé par son **rang** (de 0 pour le plus petit jusqu'à *n*-1 pour le plus grand)  
 Puis, la méthode utilisée dépend du nombre *n* d'éléments :
 
 | Taille n | Méthode |
@@ -121,7 +122,7 @@ Le meilleur compromis évolue comme √*n*, et le coefficient 1,4 a été trouv�
 
 ## Mesurer l'optimisation
 
-Deux outils permettent de reproduire les mesures. Ils utilisent des piles tirées au hasard.
+Voici deux outils qui utilisent des piles tirées au hasard :
 
 ```bash
 go run ./cmd/comparer/tri       # compare les méthodes de tri selon la taille de la pile
@@ -137,14 +138,15 @@ Elles sont fonctionnelles, mais moins efficaces. Nous les gardons comme point de
 go test ./...
 ```
 
-Le test de la recherche exhaustive sur 8 éléments dure environ 5 secondes. Pour l'afficher en détail : `go test -v ./piles`.
+Le test de la fonction recherche sur 8 éléments dure environ 5 secondes.  
+Pour l'afficher en détail : `go test -v ./piles`.
 
 ## Limites connues
 
 - Push-Swap n'accepte que les nombres entiers relatifs. Les doublons sont refusés.
-- Les nombres sont des `int` Go, donc limités aux bornes de ce type :
-de -2 147 483 648 à 2 147 483 647 sur une machine 32 bits  
+- Les nombres sont des `int` Go, donc limités aux bornes de ce type :  
+de -2 147 483 648 à 2 147 483 647 sur une machine 32 bits   
 de -9 223 372 036 854 775 808 à 9 223 372 036 854 775 807 sur une machine 64 bits  
 Au-delà, le programme affiche `Error`.  
-- La recherche exhaustive devient trop lente au-delà de 8 éléments : c'est la raison du changement de méthode.
-- Pour les grandes piles, le tri par blocs est efficace mais n'est pas garanti optimal.
+- La vitesse d'exécution de la fonction recherche dépend de la puissance de la machine. Elle devient beaucoup trop lente au-delà de 8 éléments. C'est pourquoi on change de méthode par la suite.
+- Pour les grandes piles, notre tri par blocs est efficace mais n'est pas garanti optimal.
