@@ -7,13 +7,14 @@ Push-Swap est un défi d'algorithmie, celui-ci est codé en Go.
 ## Sommaire
 
 - [Principe](#principe)
-- [Prérequis et compilation](#prérequis-et-compilation)
+- [Compilation](#compilation)
 - [Utilisation](#utilisation)
-- [Les instructions](#les-instructions)
+    - [Push-Swap](#1-push-swap)
+    - [Checker](#2-checker)
+- [Détail des opérations](#détail-des-opérations)
 - [Stratégie de tri](#stratégie-de-tri)
 - [Mesurer l'optimisation](#mesurer-loptimisation)
 - [Tests](#tests)
-- [Structure du projet](#structure-du-projet)
 - [Limites connues](#limites-connues)
 
 ## Principe
@@ -39,7 +40,7 @@ go build -o comparer-tri ./cmd/comparer/tri
 
 ## Utilisation
 
-### 1) Push-Swap
+### 1. Push-Swap
 Entrez en argument la pile à trier (fonctionne avec ou sans guillemets).  
 Exemple :
 
