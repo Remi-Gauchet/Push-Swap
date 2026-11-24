@@ -117,9 +117,10 @@ Une fois *a* vide, tous les éléments sont remis dans *a* avec `pa`, dans le bo
 1. **Aller** : les éléments de *a* sont envoyés dans *b* par tranches de valeurs, des plus petites aux plus grandes.
 2. **Retour** : on remonte vers *a* en ramenant à chaque fois le plus grand élément de *b*, par le chemin le plus court (`rb` ou `rrb`).
 
-La taille des tranches est calculée par `outils.TailleDeBloc` : environ 1,4 × √*n*, arrondie à l'entier le plus proche.  
+L'efficacité du tri par bloc repose sur le choix optimal de la taille du bloc en fonction de *n*.  
 Une taille trop petite oblige à parcourir *a* un grand nombre de fois, une taille trop grande range mal *b* et rend le retour coûteux.  
-Le meilleur compromis évolue comme √*n*, et le coefficient 1,4 a été trouvé par mesure avec `cmd/comparer/tailles`.
+Selon nos observations : `Taille de bloc optimale = coefficient x √n`  
+Nous avons trouvé le coefficient **1,4** par tattonnement avec la fonction `./comparer-tailles`.
 
 ## Mesurer l'optimisation
 
